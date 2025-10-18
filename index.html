@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>다운로드 사이트</title>
+<style>
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Noto Sans KR",sans-serif;
+  background: linear-gradient(135deg,#a1c4fd,#c2e9fb);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.container{
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding:40px 30px;
+  text-align:center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  width:90%;
+  max-width:500px;
+}
+.top-buttons{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom: 30px;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.top-buttons a{
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  padding:10px 16px;
+  border-radius:12px;
+  text-decoration:none;
+  color:#fff;
+  font-weight:600;
+  transition:0.3s;
+}
+.top-buttons a:hover{background: rgba(255,255,255,0.3);}
+.download-btn{
+  display:inline-block;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(12px);
+  padding:18px 28px;
+  border-radius:16px;
+  font-size:18px;
+  font-weight:700;
+  color:#fff;
+  text-decoration:none;
+  transition:0.3s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.download-btn:hover{background: rgba(255,255,255,0.35);}
+h1{
+  margin-bottom:20px;
+  color:#fff;
+  font-size:24px;
+  text-shadow:0 2px 6px rgba(0,0,0,0.3);
+}
+.version-list{
+  margin-top:30px;
+  text-align:left;
+}
+.version-list a{
+  display:block;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding:10px 12px;
+  border-radius:12px;
+  margin-bottom:10px;
+  text-decoration:none;
+  color:#fff;
+  font-weight:500;
+  transition:0.3s;
+}
+.version-list a:hover{background: rgba(255,255,255,0.25);}
+.whatsnew-btn{
+  margin-top:20px;
+  display:inline-block;
+  text-decoration:none;
+  color:#fff;
+  font-weight:600;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  padding:10px 14px;
+  border-radius:12px;
+  transition:0.3s;
+  cursor:pointer;
+}
+.whatsnew-btn:hover{background: rgba(255,255,255,0.3);}
+.modal{
+  display:none;
+  position:fixed;
+  top:0;left:0;width:100%;height:100%;
+  background: rgba(0,0,0,0.5);
+  justify-content:center;
+  align-items:center;
+  z-index:100;
+}
+.modal-content{
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px);
+  border-radius:20px;
+  padding:30px 20px;
+  max-width:400px;
+  width:90%;
+  color:#fff;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  text-align:left;
+  position:relative;
+}
+.modal-content h2{
+  margin-top:0;
+  text-align:center;
+}
+.close-btn{
+  position:absolute;
+  top:10px; right:14px;
+  cursor:pointer;
+  font-size:20px;
+  font-weight:700;
+  color:#fff;
+}
+@media(max-width:500px){
+  .top-buttons a{padding:8px 12px;font-size:14px;}
+  .download-btn{padding:14px 20px;font-size:16px;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- 상단 버튼 -->
+  <div class="top-buttons">
+    <a href="https://youtube.com/@lchat-z4l?si=7xRqoH4caB5mlQQz" target="_blank">YouTube</a>
+    <a href="#" onclick="alert('서버가 열려있지 않습니다.'); return false;">채팅 서버</a>
+    <a href="https://naver.me/GOhSpjkB" target="_blank">카페 [Lchat] 초대</a>
+  </div>
+
+  <h1>최신 버전 다운로드</h1>
+  <!-- V2 최신 버전 -->
+  <a class="download-btn" href="https://drive.google.com/drive/folders/1MvrbjpB_XwT-ny3rSj545t6vF7yT-9ph" target="_blank">⬇ V2 다운로드</a>
+
+  <div class="version-list">
+    <h2 style="color:#fff;margin-bottom:10px;">이전 버전</h2>
+    <a href="https://drive.google.com/drive/folders/14ToWefQ6zAkG5B5poYmkBTnso5hl4Bxo" target="_blank">V1 다운로드</a>
+  </div>
+
+  <div style="text-align:center;">
+    <span class="whatsnew-btn" id="openModal">📢 Whats New 보기</span>
+  </div>
+</div>
+
+<!-- Whats New 모달 -->
+<div class="modal" id="whatsNewModal">
+  <div class="modal-content">
+    <span class="close-btn" id="closeModal">&times;</span>
+    <h2>📢 Whats New</h2>
+    <ul>
+      <li><strong>방 분리 기능</strong> - 더 이상 하나의 방에서 수다떨 필요가 없습니다. 각자 원하는 주제에 맞춰 방에 들어가서 수다를 떠세요!</li>
+      <li><strong>어드민 사이트</strong> - 어드민들은 각자 사이트를 열고 나서 수정할 수 있습니다! 방 열기, 삭제, 유저 밴 가능!</li>
+      <li><strong>로그인 기능</strong> - 유저들은 로그인(회원가입) 후 사이트를 탐방할 수 있어요! 더 이상 상대를 추리할 필요 없음!</li>
+      <li><strong>입/퇴장 로그 및 접속자 수</strong> - 누가 들어왔는지, 나갔는지 확인 가능!</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+const modal = document.getElementById('whatsNewModal');
+const openBtn = document.getElementById('openModal');
+const closeBtn = document.getElementById('closeModal');
+
+openBtn.onclick = () => { modal.style.display = 'flex'; }
+closeBtn.onclick = () => { modal.style.display = 'none'; }
+window.onclick = e => { if(e.target == modal) modal.style.display='none'; }
+</script>
+</body>
+</html>
