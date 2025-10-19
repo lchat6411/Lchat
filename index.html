@@ -130,6 +130,22 @@ h1{
   font-weight:700;
   color:#fff;
 }
+/* fullscreen iframe modal */
+.modal.fullscreen{
+  align-items:stretch;
+}
+.modal.fullscreen .modal-content{
+  width:100%;
+  height:100%;
+  max-width:none;
+  border-radius:0;
+  padding:0;
+}
+.modal.fullscreen .close-btn{
+  top:10px;
+  right:18px;
+  z-index: 110;
+}
 @media(max-width:500px){
   .top-buttons a{padding:8px 12px;font-size:14px;}
   .download-btn{padding:14px 20px;font-size:16px;}
@@ -141,7 +157,7 @@ h1{
   <!-- 상단 버튼 -->
   <div class="top-buttons">
     <a href="https://youtube.com/@lchat-z4l?si=7xRqoH4caB5mlQQz" target="_blank">YouTube</a>
-    <a href="#" onclick="alert('서버가 열려있지 않습니다.'); return false;">채팅 서버</a>
+    <a href="#" id="openChatServer">채팅 서버</a>
     <a href="https://naver.me/GOhSpjkB" target="_blank">카페 [Lchat] 초대</a>
   </div>
 
@@ -150,7 +166,7 @@ h1{
   <span class="whatsnew-btn" id="chatGuideBtn">💬 채팅 웹 실행 조건 & 방법</span>
 </div>
 
-<!-- 모달 -->
+<!-- 모달: 채팅 가이드 -->
 <div class="modal" id="chatGuideModal">
   <div class="modal-content">
     <span class="close-btn" id="closeChatGuide">&times;</span>
@@ -169,17 +185,6 @@ h1{
     </ul>
   </div>
 </div>
-
-<script>
-const chatGuideModal = document.getElementById('chatGuideModal');
-const chatGuideBtn = document.getElementById('chatGuideBtn');
-const closeChatGuide = document.getElementById('closeChatGuide');
-
-chatGuideBtn.onclick = () => { chatGuideModal.style.display = 'flex'; }
-closeChatGuide.onclick = () => { chatGuideModal.style.display = 'none'; }
-window.onclick = e => { if(e.target == chatGuideModal) chatGuideModal.style.display='none'; }
-</script>
-
 
   <h1>최신 버전 다운로드</h1>
   <!-- V3 최신 버전 -->
@@ -210,14 +215,69 @@ window.onclick = e => { if(e.target == chatGuideModal) chatGuideModal.style.disp
   </div>
 </div>
 
+<!-- 채팅 서버(전체화면 iframe) 모달 -->
+<div class="modal" id="chatServerModal">
+  <div class="modal-content">
+    <span class="close-btn" id="closeChatServer">&times;</span>
+    <iframe id="chatServerFrame" src="" frameborder="0" style="width:100%;height:100vh;"></iframe>
+  </div>
+</div>
+
 <script>
-const modal = document.getElementById('whatsNewModal');
+/*
+  변경된 동작:
+  - "채팅 서버" 버튼은 페이지 이동 없이 전체 화면 모달로 지정된 URL을 iframe에 로드합니다.
+  - 링크(주소창)는 변경되지 않습니다 (href="#" 그대로 유지).
+  제한사항:
+  - iframe에 로드하려는 외부 사이트가 X-Frame-Options 또는 CSP로 임베딩을 차단하면 내용이 표시되지 않습니다.
+*/
+
+const CHAT_SERVER_URL = 'https://autocatalytic-untranscendent-dayle.ngrok-free.dev/';
+
+const chatGuideModal = document.getElementById('chatGuideModal');
+const chatGuideBtn = document.getElementById('chatGuideBtn');
+const closeChatGuide = document.getElementById('closeChatGuide');
+
+const whatsNewModal = document.getElementById('whatsNewModal');
 const openBtn = document.getElementById('openModal');
 const closeBtn = document.getElementById('closeModal');
 
-openBtn.onclick = () => { modal.style.display = 'flex'; }
-closeBtn.onclick = () => { modal.style.display = 'none'; }
-window.onclick = e => { if(e.target == modal) modal.style.display='none'; }
+const chatServerModal = document.getElementById('chatServerModal');
+const openChatServer = document.getElementById('openChatServer');
+const closeChatServer = document.getElementById('closeChatServer');
+const chatServerFrame = document.getElementById('chatServerFrame');
+
+chatGuideBtn.addEventListener('click', () => { chatGuideModal.style.display = 'flex'; });
+closeChatGuide.addEventListener('click', () => { chatGuideModal.style.display = 'none'; });
+
+openBtn.addEventListener('click', () => { whatsNewModal.style.display = 'flex'; });
+closeBtn.addEventListener('click', () => { whatsNewModal.style.display = 'none'; });
+
+// 채팅 서버 열기 (주소창 변경 없이 전체 화면 iframe으로 로드)
+openChatServer.addEventListener('click', (e) => {
+  e.preventDefault();
+  chatServerFrame.src = CHAT_SERVER_URL;
+  chatServerModal.classList.add('fullscreen');
+  chatServerModal.style.display = 'flex';
+});
+
+// 채팅 서버 닫기: iframe 비우기(리소스 해제)
+closeChatServer.addEventListener('click', () => {
+  chatServerModal.style.display = 'none';
+  chatServerFrame.src = 'about:blank';
+  chatServerModal.classList.remove('fullscreen');
+});
+
+// 공통: 모달 바깥 클릭으로 닫기
+window.addEventListener('click', (e) => {
+  if (e.target === chatGuideModal) chatGuideModal.style.display = 'none';
+  if (e.target === whatsNewModal) whatsNewModal.style.display = 'none';
+  if (e.target === chatServerModal) {
+    chatServerModal.style.display = 'none';
+    chatServerFrame.src = 'about:blank';
+    chatServerModal.classList.remove('fullscreen');
+  }
+});
 </script>
 </body>
 </html>
